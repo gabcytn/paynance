@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, router } from "expo-router";
+import { Redirect } from "expo-router";
 
 const Home = () => {
   return <Redirect href={"(main)"} />;
