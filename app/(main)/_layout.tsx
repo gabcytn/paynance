@@ -1,9 +1,12 @@
 import React from "react";
-import { Stack } from "expo-router";
-const MainAppLayout = () => {
-  <Stack>
-    <Stack.Screen name="index" />
-  </Stack>;
+import { Tabs } from "expo-router";
+
+const MainTabs = () => {
+  return (
+    <Tabs>
+      <Tabs.Screen name="index" />
+    </Tabs>
+  );
 };
 
-export default MainAppLayout;
+export default MainTabs;
