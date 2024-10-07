@@ -28,7 +28,6 @@ const Login = () => {
   });
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Login</Text>
       <Text>Welcome, back!</Text>
       <View>
         <TextInput placeholder="Username" onChangeText={setUsername} />
