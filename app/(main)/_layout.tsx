@@ -3,7 +3,7 @@ import { Tabs } from "expo-router";
 
 const MainTabs = () => {
   return (
-    <Tabs>
+    <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen name="index" />
     </Tabs>
   );
