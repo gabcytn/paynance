@@ -8,9 +8,12 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
+async function handleLogin() {}
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   useEffect(() => {
     const checkLoginStatus = async () => {
       const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
@@ -26,12 +29,16 @@ const Login = () => {
       <Text>Login</Text>
       <Text>Welcome, back!</Text>
       <View>
-        <TextInput placeholder="Username" />
+        <TextInput placeholder="Username" onChangeText={setUsername} />
       </View>
       <View>
-        <TextInput secureTextEntry placeholder="Password" />
+        <TextInput
+          secureTextEntry
+          placeholder="Password"
+          onChangeText={setPassword}
+        />
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleLogin}>
         <Text>SIGN IN</Text>
       </TouchableOpacity>
     </SafeAreaView>
