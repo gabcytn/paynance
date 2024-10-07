@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect } from "react";
@@ -15,12 +22,20 @@ const Login = () => {
     checkLoginStatus();
   });
   return (
-    <View>
+    <SafeAreaView>
       <Text>Login</Text>
-    </View>
+      <Text>Welcome, back!</Text>
+      <View>
+        <TextInput placeholder="Username" />
+      </View>
+      <View>
+        <TextInput secureTextEntry placeholder="Password" />
+      </View>
+      <TouchableOpacity>
+        <Text>SIGN IN</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 };
 
 export default Login;
-
-const styles = StyleSheet.create({});
