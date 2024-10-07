@@ -1,4 +1,6 @@
 import {
+  Platform,
+  StatusBar,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -25,7 +27,7 @@ const Login = () => {
     checkLoginStatus();
   });
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <Text>Login</Text>
       <Text>Welcome, back!</Text>
       <View>
@@ -46,3 +48,9 @@ const Login = () => {
 };
 
 export default Login;
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+});
