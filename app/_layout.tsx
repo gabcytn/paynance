@@ -3,7 +3,13 @@ import { Stack } from "expo-router";
 
 const RootLayout = () => {
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        statusBarTranslucent: true,
+        headerShown: false,
+        statusBarStyle: "dark",
+      }}
+    >
       <Stack.Screen name="index" />
       <Stack.Screen name="(auth)" />
     </Stack>
