@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-
+import MainButton from "@/components/MainButton";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,13 +28,19 @@ const Register = () => {
           onChangeText={setConfirmPassword}
         />
       </View>
-      <TouchableOpacity>
-        <Text>Create Account</Text>
-      </TouchableOpacity>
+      <MainButton text="Create Account" styles={styles} />
     </SafeAreaView>
   );
 };
 
 export default Register;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  button: {
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  text: {
+    textAlign: "center",
+  },
+});

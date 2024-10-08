@@ -5,12 +5,12 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
+import MainButton from "@/components/MainButton";
 
 async function handleLogin() {}
 const Login = () => {
@@ -39,9 +39,7 @@ const Login = () => {
           onChangeText={setPassword}
         />
       </View>
-      <TouchableOpacity onPress={handleLogin}>
-        <Text>SIGN IN</Text>
-      </TouchableOpacity>
+      <MainButton text="Login" styles={styles} />
     </SafeAreaView>
   );
 };
@@ -51,5 +49,12 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+  button: {
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  text: {
+    textAlign: "center",
   },
 });
