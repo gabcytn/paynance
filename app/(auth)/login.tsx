@@ -6,12 +6,13 @@ import {
   Text,
   TextInput,
   View,
+  Image,
 } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
 import MainButton from "@/components/MainButton";
-
+import colors from "@/colors";
 async function handleLogin() {}
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -26,9 +27,14 @@ const Login = () => {
 
     checkLoginStatus();
   });
+  const mainIcon = require("@/assets/images/main-icon.png");
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Welcome, back!</Text>
+      <Image source={mainIcon} style={{ width: 75, height: 75 }} />
+      <Text style={styles.mainText}>
+        Welcome, back to{" "}
+        <Text style={{ color: colors.mainColor }}>Paynance</Text>
+      </Text>
       <View>
         <TextInput placeholder="Username" onChangeText={setUsername} />
       </View>
@@ -49,6 +55,13 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  mainText: {
+    fontFamily: "Poppins",
+    fontSize: 21,
   },
   button: {
     paddingHorizontal: 10,
