@@ -28,7 +28,7 @@ const Register = () => {
           onChangeText={setConfirmPassword}
         />
       </View>
-      <MainButton text="Create Account" styles={styles} />
+      <MainButton text="Create Account" styles={styles} touchOpacity={0.7} />
     </SafeAreaView>
   );
 };
