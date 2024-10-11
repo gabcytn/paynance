@@ -32,13 +32,13 @@ const Login = () => {
     <SafeAreaView style={styles.container}>
       <Image source={mainIcon} style={{ width: 75, height: 75 }} />
       <Text style={styles.mainText}>
-        Welcome, back to{" "}
+        Welcome back to{" "}
         <Text style={{ color: colors.mainColor }}>Paynance</Text>
       </Text>
-      <View>
+      <View style={styles.inputContainer}>
         <TextInput placeholder="Username" onChangeText={setUsername} />
       </View>
-      <View>
+      <View style={styles.inputContainer}>
         <TextInput
           secureTextEntry
           placeholder="Password"
@@ -63,11 +63,21 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     fontSize: 21,
   },
+  inputContainer: {
+    borderWidth: 1,
+  },
   button: {
+    marginTop: 10,
     paddingHorizontal: 10,
     paddingVertical: 8,
+    width: 100,
+    backgroundColor: colors.mainColor,
+    borderRadius: 7,
   },
   text: {
     textAlign: "center",
+    fontFamily: "Poppins",
+    textTransform: "uppercase",
+    color: colors.offWhite,
   },
 });
