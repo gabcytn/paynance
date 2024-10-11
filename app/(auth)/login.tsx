@@ -45,7 +45,7 @@ const Login = () => {
           onChangeText={setPassword}
         />
       </View>
-      <MainButton text="Login" styles={styles} />
+      <MainButton text="Login" styles={styles} touchOpacity={0.3} />
     </SafeAreaView>
   );
 };

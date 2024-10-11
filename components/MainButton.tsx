@@ -12,10 +12,11 @@ type PropTypes = {
     button: StyleProp<ViewStyle>;
     text: StyleProp<TextStyle>;
   };
+  touchOpacity: number;
 };
-const MainButton = ({ text, styles }: PropTypes) => {
+const MainButton = ({ text, styles, touchOpacity }: PropTypes) => {
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity style={styles.button} activeOpacity={touchOpacity}>
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );
