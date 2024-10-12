@@ -1,7 +1,7 @@
 const colors = {
-  offWhite: "#F2F5F5",
+  offWhite: "#FAF9F6",
   greyWhite: "#AAA",
-  softBlack: "#2D2D2D",
+  softBlack: "#020202",
   mainColor: "#45B69C",
 };
 
