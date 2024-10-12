@@ -30,6 +30,7 @@ const InputBox = ({
         secureTextEntry={isSecure}
         onFocus={onFocus}
         onBlur={onBlur}
+        autoCapitalize="none"
       />
     </View>
   );
