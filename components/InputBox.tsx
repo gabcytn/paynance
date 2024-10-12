@@ -13,7 +13,7 @@ type PropTypes = {
   onFocus: () => void;
   onBlur: () => void;
   styles: {
-    container: StyleProp<ViewStyle>;
+    inputContainer: StyleProp<ViewStyle>;
   };
 };
 const InputBox = ({
@@ -24,7 +24,7 @@ const InputBox = ({
   styles,
 }: PropTypes) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.inputContainer}>
       <TextInput
         placeholder={placeholder}
         secureTextEntry={isSecure}
