@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, SafeAreaView, View, TextInput } from "react-native";
 import React, { useState } from "react";
 import MainButton from "@/components/MainButton";
 const Register = () => {
