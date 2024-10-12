@@ -31,6 +31,7 @@ const InputBox = ({
         onFocus={onFocus}
         onBlur={onBlur}
         autoCapitalize="none"
+        style={{ fontFamily: "Poppins" }}
       />
     </View>
   );
