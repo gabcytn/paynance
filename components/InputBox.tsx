@@ -10,8 +10,8 @@ import React from "react";
 type PropTypes = {
   placeholder: string;
   isSecure: boolean;
-  onFocus: () => {};
-  onBlur: () => {};
+  onFocus: () => void;
+  onBlur: () => void;
   styles: {
     container: StyleProp<ViewStyle>;
   };
