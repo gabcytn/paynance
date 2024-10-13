@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     width: 250,
-    paddingHorizontal: 5,
+    paddingHorizontal: 8,
     paddingVertical: 3,
     marginVertical: 5,
   },
