@@ -34,7 +34,7 @@ const Login = () => {
       </Text>
       <Text style={styles.subTitle}>Start tracking your money</Text>
       <InputBox
-        placeholder="Username"
+        placeholder="Email"
         isSecure={false}
         styles={styles}
         value={username}
