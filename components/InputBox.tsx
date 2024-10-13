@@ -5,13 +5,13 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import React from "react";
-
+import React, { Dispatch, SetStateAction, useState } from "react";
+import colors from "@/colors";
 type PropTypes = {
   placeholder: string;
   isSecure: boolean;
-  onFocus: () => void;
-  onBlur: () => void;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
   styles: {
     inputContainer: StyleProp<ViewStyle>;
   };
@@ -19,18 +19,30 @@ type PropTypes = {
 const InputBox = ({
   placeholder,
   isSecure,
-  onFocus,
-  onBlur,
   styles,
+  value,
+  setValue,
 }: PropTypes) => {
+  const [isFocused, setIsFocused] = useState(false);
   return (
-    <View style={styles.inputContainer}>
+    <View
+      style={[
+        styles.inputContainer,
+        { borderColor: isFocused ? colors.mainColor : colors.softBlack },
+      ]}
+    >
       <TextInput
         placeholder={placeholder}
+        value={value}
+        onChangeText={setValue}
         secureTextEntry={isSecure}
-        onFocus={onFocus}
-        onBlur={onBlur}
         autoCapitalize="none"
+        onFocus={() => {
+          setIsFocused(true);
+        }}
+        onBlur={() => {
+          setIsFocused(false);
+        }}
         style={{ fontFamily: "Poppins" }}
       />
     </View>
@@ -39,4 +51,4 @@ const InputBox = ({
 
 export default InputBox;
 
-const styles = StyleSheet.create({});
+const styles2 = StyleSheet.create({});

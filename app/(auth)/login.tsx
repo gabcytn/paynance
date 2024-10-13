@@ -11,12 +11,12 @@ import React, { useEffect, useState } from "react";
 import MainButton from "@/components/MainButton";
 import InputBox from "@/components/InputBox";
 import colors from "@/colors";
-async function handleLogin() {}
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [usernameIsFocused, setUsernameIsFocused] = useState(false);
-  const [passwordIsFocused, setPasswordIsFocused] = useState(false);
+  async function handleLogin() {
+    console.log(`Username: ${username} \n Password: ${password}`);
+  }
   useEffect(() => {
     const checkLoginStatus = async () => {
       const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
@@ -27,14 +27,6 @@ const Login = () => {
 
     checkLoginStatus();
   });
-  function focusOn(textInput: string) {
-    if (textInput === "username") setUsernameIsFocused(true);
-    else setPasswordIsFocused(true);
-  }
-  function unfocusOn(textInput: string) {
-    if (textInput === "username") setPasswordIsFocused(false);
-    else setPasswordIsFocused(false);
-  }
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.mainText}>
@@ -44,22 +36,23 @@ const Login = () => {
       <InputBox
         placeholder="Username"
         isSecure={false}
-        onFocus={() => focusOn("username")}
-        onBlur={() => {
-          unfocusOn("username");
-        }}
         styles={styles}
+        value={username}
+        setValue={setUsername}
       />
       <InputBox
         placeholder="Password"
         isSecure={true}
-        onFocus={() => focusOn("password")}
-        onBlur={() => {
-          unfocusOn("password");
-        }}
         styles={styles}
+        value={password}
+        setValue={setPassword}
       />
-      <MainButton text="Login" styles={styles} touchOpacity={0.7} />
+      <MainButton
+        text="Login"
+        styles={styles}
+        touchOpacity={0.7}
+        onPress={handleLogin}
+      />
     </SafeAreaView>
   );
 };
