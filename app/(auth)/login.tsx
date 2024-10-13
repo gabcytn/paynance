@@ -9,7 +9,7 @@ import {
   Pressable,
   View,
 } from "react-native";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
 import MainButton from "@/components/MainButton";
@@ -64,7 +64,9 @@ const Login = () => {
         <View style={{ flexDirection: "row", marginTop: 8 }}>
           <Text style={styles.noAccount}>Don't have an account? </Text>
           <Pressable>
-            <Text style={styles.createAccount}>Create one.</Text>
+            <Link href={"./register"} style={styles.createAccount}>
+              Create one.
+            </Link>
           </Pressable>
         </View>
       </SafeAreaView>
