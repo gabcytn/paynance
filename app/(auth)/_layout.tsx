@@ -6,12 +6,19 @@ const AuthLayout = () => {
     <Stack
       screenOptions={{
         statusBarTranslucent: true,
-        headerShown: false,
         statusBarStyle: "dark",
       }}
     >
-      <Stack.Screen name="login" />
-      <Stack.Screen name="register" />
+      <Stack.Screen name="login" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="register"
+        options={{
+          headerBackButtonMenuEnabled: true,
+          headerShown: true,
+          headerTransparent: true,
+          title: "",
+        }}
+      />
     </Stack>
   );
 };
