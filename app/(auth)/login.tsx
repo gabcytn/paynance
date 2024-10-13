@@ -4,6 +4,10 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Pressable,
+  View,
 } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -28,32 +32,43 @@ const Login = () => {
     checkLoginStatus();
   });
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.mainText}>
-        Welcome to <Text style={{ color: colors.mainColor }}>Paynance</Text>
-      </Text>
-      <Text style={styles.subTitle}>Start tracking your money</Text>
-      <InputBox
-        placeholder="Email"
-        isSecure={false}
-        styles={styles}
-        value={username}
-        setValue={setUsername}
-      />
-      <InputBox
-        placeholder="Password"
-        isSecure={true}
-        styles={styles}
-        value={password}
-        setValue={setPassword}
-      />
-      <MainButton
-        text="Login"
-        styles={styles}
-        touchOpacity={0.7}
-        onPress={handleLogin}
-      />
-    </SafeAreaView>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.mainText}>
+          Welcome to <Text style={{ color: colors.mainColor }}>Paynance</Text>
+        </Text>
+        <Text style={styles.subTitle}>Start tracking your money</Text>
+        <InputBox
+          placeholder="Email"
+          isSecure={false}
+          styles={styles}
+          value={username}
+          setValue={setUsername}
+        />
+        <InputBox
+          placeholder="Password"
+          isSecure={true}
+          styles={styles}
+          value={password}
+          setValue={setPassword}
+        />
+        <Pressable>
+          <Text style={styles.forgotPassword}>Forgot password</Text>
+        </Pressable>
+        <MainButton
+          text="Login"
+          styles={styles}
+          touchOpacity={0.7}
+          onPress={handleLogin}
+        />
+        <View style={{ flexDirection: "row", marginTop: 8 }}>
+          <Text style={styles.noAccount}>Don't have an account? </Text>
+          <Pressable>
+            <Text style={styles.createAccount}>Create one.</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -80,12 +95,29 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     width: 250,
-    paddingHorizontal: 8,
+    paddingHorizontal: 5,
     paddingVertical: 3,
     marginVertical: 5,
   },
+  forgotPassword: {
+    width: 250,
+    textAlign: "right",
+    color: colors.mainColor,
+    fontFamily: "Poppins",
+    fontSize: 12,
+    marginEnd: 5,
+  },
+  noAccount: {
+    fontFamily: "Poppins",
+    fontSize: 12,
+  },
+  createAccount: {
+    fontFamily: "Poppins",
+    color: colors.mainColor,
+    fontSize: 12,
+  },
   button: {
-    marginTop: 10,
+    marginTop: 5,
     paddingHorizontal: 10,
     paddingVertical: 8,
     width: 100,
