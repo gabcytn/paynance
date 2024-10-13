@@ -28,7 +28,10 @@ const InputBox = ({
     <View
       style={[
         styles.inputContainer,
-        { borderColor: isFocused ? colors.mainColor : colors.softBlack },
+        {
+          borderColor: isFocused ? colors.mainColor : colors.softBlack,
+          borderWidth: isFocused ? 2 : 1,
+        },
       ]}
     >
       <TextInput
