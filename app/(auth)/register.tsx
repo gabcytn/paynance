@@ -16,18 +16,40 @@ import React, { useEffect, useState } from "react";
 import MainButton from "@/components/MainButton";
 import InputBox from "@/components/InputBox";
 import colors from "@/colors";
-const Login = () => {
-  const [username, setUsername] = useState("");
+const SERVER_URL = process.env.EXPO_PUBLIC_SERVER_URL;
+const Register = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
+  const [isConfirmPasswordError, setIsConfirmPasswordError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState("Invalid email");
   async function handleRegister() {
-    const credentialsArr = [username, password, confirmPassword];
-    if (credentialsArr.includes(""))
-      Alert.alert("Incomplete", "Fill out all of the fields");
-    else if (password.length < 8)
-      Alert.alert("Password too short", "Minimum length is 8");
-    else if (password !== confirmPassword)
-      Alert.alert("Passwords do not match!", "Re-enter your password");
+    const credentialsArr = [email, password, confirmPassword];
+    if (credentialsArr.includes("")) {
+      Alert.alert("Incomplete", "Fill out all fields");
+    } else if (password.length < 8) setIsPasswordError(true);
+    else if (password !== confirmPassword) setIsConfirmPasswordError(true);
+    else {
+      const res = await fetch(`${SERVER_URL}/register`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+      if (res.status === 409) {
+        setIsEmailError(true);
+        setEmailErrorMessage("Email already taken");
+      } else if (res.status === 200) {
+        setIsEmailError(false);
+        router.back();
+      }
+    }
   }
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -38,7 +60,32 @@ const Login = () => {
     };
 
     checkLoginStatus();
-  });
+  }, []);
+
+  useEffect(() => {
+    const regex =
+      /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+/g;
+    if (!regex.test(email) && email) {
+      setIsEmailError(true);
+    } else {
+      setIsEmailError(false);
+      setEmailErrorMessage("Invalid email");
+    }
+  }, [email]);
+  useEffect(() => {
+    if ((confirmPassword != password && confirmPassword) || isPasswordError) {
+      setIsConfirmPasswordError(true);
+    } else {
+      setIsConfirmPasswordError(false);
+    }
+  }, [confirmPassword]);
+  useEffect(() => {
+    if (password.length < 8 && password) {
+      setIsPasswordError(true);
+    } else {
+      setIsPasswordError(false);
+    }
+  }, [password]);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
@@ -49,23 +96,29 @@ const Login = () => {
         <InputBox
           placeholder="Email"
           isSecure={false}
+          isError={isEmailError}
           styles={styles}
-          value={username}
-          setValue={setUsername}
+          value={email}
+          setValue={setEmail}
+          errorMessage={emailErrorMessage}
         />
         <InputBox
           placeholder="Password"
           isSecure={true}
+          isError={isPasswordError}
           styles={styles}
           value={password}
           setValue={setPassword}
+          errorMessage="Password too short"
         />
         <InputBox
           placeholder="Confirm Password"
           isSecure={true}
+          isError={isConfirmPasswordError}
           styles={styles}
           value={confirmPassword}
           setValue={setConfirmPassword}
+          errorMessage="Passwords do not match"
         />
         <MainButton
           text="Create"
@@ -86,7 +139,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
 
 const styles = StyleSheet.create({
   container: {

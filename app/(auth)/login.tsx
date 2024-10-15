@@ -8,6 +8,7 @@ import {
   Keyboard,
   Pressable,
   View,
+  Alert,
 } from "react-native";
 import { Link, router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,11 +16,34 @@ import React, { useEffect, useState } from "react";
 import MainButton from "@/components/MainButton";
 import InputBox from "@/components/InputBox";
 import colors from "@/colors";
+
+const SERVER_URL = process.env.EXPO_PUBLIC_SERVER_URL;
+
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   async function handleLogin() {
-    console.log(`Username: ${username} \n Password: ${password}`);
+    const credentialsArr = [email, password];
+    if (credentialsArr.includes(""))
+      Alert.alert("Incomplete", "Fill out all fields");
+    else {
+      const res = await fetch(`${SERVER_URL}/login`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+      if (res.status === 200) {
+        router.replace("../(main)");
+        await AsyncStorage.setItem("isLoggedIn", "true");
+      } else {
+        Alert.alert("Try again", "Invalid credentials");
+      }
+    }
   }
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -42,8 +66,8 @@ const Login = () => {
           placeholder="Email"
           isSecure={false}
           styles={styles}
-          value={username}
-          setValue={setUsername}
+          value={email}
+          setValue={setEmail}
         />
         <InputBox
           placeholder="Password"
