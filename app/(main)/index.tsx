@@ -5,6 +5,7 @@ import {
   StatusBar,
   Platform,
   SafeAreaView,
+  Button,
 } from "react-native";
 import React, { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -23,6 +24,17 @@ const Dashboard = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text>Dashboard</Text>
+      <Button
+        title="Logout"
+        onPress={() => {
+          const logout = async () => {
+            await AsyncStorage.clear();
+            router.replace("../(auth)/login");
+          };
+
+          logout();
+        }}
+      />
     </SafeAreaView>
   );
 };
