@@ -1,6 +1,7 @@
 import {
   StyleProp,
   StyleSheet,
+  Text,
   TextInput,
   View,
   ViewStyle,
@@ -10,6 +11,8 @@ import colors from "@/colors";
 type PropTypes = {
   placeholder: string;
   isSecure: boolean;
+  isError?: boolean;
+  errorMessage?: string;
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   styles: {
@@ -19,36 +22,51 @@ type PropTypes = {
 const InputBox = ({
   placeholder,
   isSecure,
+  isError,
+  errorMessage,
   styles,
   value,
   setValue,
 }: PropTypes) => {
-  const [isFocused, setIsFocused] = useState(false);
   return (
-    <View
-      style={[
-        styles.inputContainer,
-        {
-          borderColor: isFocused ? colors.mainColor : colors.softBlack,
-          borderWidth: isFocused ? 2 : 1,
-        },
-      ]}
-    >
-      <TextInput
-        placeholder={placeholder}
-        value={value}
-        onChangeText={setValue}
-        secureTextEntry={isSecure}
-        autoCapitalize="none"
-        onFocus={() => {
-          setIsFocused(true);
-        }}
-        onBlur={() => {
-          setIsFocused(false);
-        }}
-        style={{ fontFamily: "Poppins" }}
-      />
-    </View>
+    <>
+      <View
+        style={[
+          styles.inputContainer,
+          {
+            borderColor: isError
+              ? "red"
+              : value
+              ? colors.mainColor
+              : colors.softBlack,
+            borderWidth: 1.25,
+          },
+        ]}
+      >
+        <TextInput
+          placeholder={placeholder}
+          value={value}
+          onChangeText={setValue}
+          secureTextEntry={isSecure}
+          autoCapitalize="none"
+          style={{ fontFamily: "Poppins" }}
+        />
+      </View>
+      {isError ? (
+        <Text
+          style={{
+            textAlign: "left",
+            fontFamily: "Poppins",
+            fontSize: 10,
+            color: "red",
+            width: 250,
+            marginLeft: 5,
+          }}
+        >
+          {errorMessage}
+        </Text>
+      ) : null}
+    </>
   );
 };
 
