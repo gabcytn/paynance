@@ -19,10 +19,6 @@ import InputBox from "@/components/InputBox";
 import colors from "@/colors";
 
 const SERVER_URL = process.env.EXPO_PUBLIC_SERVER_URL;
-function generateSessionId() {
-  const crypto = require("crypto");
-  return crypto.randomBytes(16).toString("base64");
-}
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,9 +39,9 @@ const Login = () => {
       });
       if (res.status === 200) {
         await AsyncStorage.setItem("isLoggedIn", "true");
-        await AsyncStorage.setItem("sessionId", generateSessionId());
         router.replace("../(main)");
       } else {
+        setPassword("");
         Alert.alert("Try again", "Invalid credentials");
       }
     }
