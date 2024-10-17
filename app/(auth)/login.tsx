@@ -10,6 +10,7 @@ import {
   View,
   Alert,
 } from "react-native";
+import * as SQLite from "expo-sqlite";
 import { Link, router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
@@ -18,7 +19,10 @@ import InputBox from "@/components/InputBox";
 import colors from "@/colors";
 
 const SERVER_URL = process.env.EXPO_PUBLIC_SERVER_URL;
-
+function generateSessionId() {
+  const crypto = require("crypto");
+  return crypto.randomBytes(16).toString("base64");
+}
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,8 +42,9 @@ const Login = () => {
         }),
       });
       if (res.status === 200) {
-        router.replace("../(main)");
         await AsyncStorage.setItem("isLoggedIn", "true");
+        await AsyncStorage.setItem("sessionId", generateSessionId());
+        router.replace("../(main)");
       } else {
         Alert.alert("Try again", "Invalid credentials");
       }
