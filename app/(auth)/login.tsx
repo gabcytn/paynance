@@ -59,7 +59,7 @@ const Login = () => {
     };
 
     checkLoginStatus();
-  });
+  }, []);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
