@@ -6,10 +6,12 @@ import {
   Platform,
   SafeAreaView,
   Button,
+  Pressable,
 } from "react-native";
 import React, { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 const Dashboard = () => {
   useEffect(() => {
@@ -22,20 +24,25 @@ const Dashboard = () => {
     checkLoginStatus();
   }, []);
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Dashboard</Text>
-      <Button
-        title="Logout"
-        onPress={() => {
-          const logout = async () => {
-            await AsyncStorage.clear();
-            router.replace("../(auth)/login");
-          };
+    <>
+      <SafeAreaView style={styles.container}>
+        <Text>Dashboard</Text>
+        <Button
+          title="Logout"
+          onPress={() => {
+            const logout = async () => {
+              await AsyncStorage.clear();
+              router.replace("../(auth)/login");
+            };
 
-          logout();
-        }}
-      />
-    </SafeAreaView>
+            logout();
+          }}
+        />
+      </SafeAreaView>
+      <Pressable>
+        <Ionicons name="add" />
+      </Pressable>
+    </>
   );
 };
 
