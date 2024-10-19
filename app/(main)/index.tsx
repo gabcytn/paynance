@@ -41,7 +41,7 @@ const Dashboard = () => {
         />
       </SafeAreaView>
       <Pressable style={styles.addButton}>
-        <Ionicons name="add" />
+        <Ionicons name="add" size={30} color={colors.offWhite} />
       </Pressable>
     </>
   );
@@ -61,5 +61,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
