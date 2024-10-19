@@ -44,9 +44,7 @@ const Dashboard = () => {
       <Pressable
         style={({ pressed }) => [
           styles.addButton,
-          {
-            opacity: pressed ? 0.8 : 1,
-          },
+          { opacity: pressed ? 0.8 : 1 },
         ]}
       >
         <Ionicons name="add" size={30} color={colors.offWhite} />
