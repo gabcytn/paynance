@@ -9,6 +9,7 @@ const MainTabs = () => {
         name="index"
         options={{
           title: "Dashboard",
+					tabBarActiveTintColor: colors.mainColor,
           tabBarIcon: ({ focused }) => 
 						<TabBarIcon size={28} name={"home"} color={ focused ? colors.mainColor : colors.greyWhite}/>
         }}
@@ -17,6 +18,7 @@ const MainTabs = () => {
         name="history"
         options={{
           title: "History",
+					tabBarActiveTintColor: colors.mainColor,
           tabBarIcon: ({ focused }) => 
 						<TabBarIcon size={28} name={"time"} color={ focused ? colors.mainColor : colors.greyWhite}/>
         }}
