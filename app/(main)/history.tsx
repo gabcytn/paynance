@@ -1,14 +1,42 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, SafeAreaView, Platform, StatusBar } from 'react-native'
 import React from 'react'
-
+import MainButton from "@/components/MainButton";
+import colors from "@/colors";
+const logout = async () => {
+  await AsyncStorage.clear();
+  router.replace("../(auth)/login");
+};
 const History = () => {
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Text>History</Text>
-    </View>
+      <MainButton
+        text="Logout"
+        touchOpacity={0.8}
+        onPress={logout}
+        styles={styles}
+      />
+    </SafeAreaView>
   )
 }
 
 export default History
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+  button: {
+    marginTop: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    width: 100,
+    backgroundColor: colors.mainColor,
+    borderRadius: 7,
+  },
+  text: {
+    textAlign: "center",
+    fontFamily: "Poppins",
+    color: colors.offWhite,
+  },
+})

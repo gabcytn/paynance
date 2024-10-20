@@ -13,12 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
-import MainButton from "@/components/MainButton";
 
-const logout = async () => {
-  await AsyncStorage.clear();
-  router.replace("../(auth)/login");
-};
 
 const Dashboard = () => {
   useEffect(() => {
@@ -34,12 +29,6 @@ const Dashboard = () => {
     <>
       <SafeAreaView style={styles.container}>
         <Text>Dashboard</Text>
-        <MainButton
-          text="Logout"
-          touchOpacity={0.8}
-          onPress={logout}
-          styles={styles}
-        />
       </SafeAreaView>
       <Pressable
         style={({ pressed }) => [
