@@ -6,6 +6,7 @@ SplashScreen.preventAutoHideAsync();
 const RootLayout = () => {
   const [loaded] = useFonts({
     Poppins: require("@/assets/fonts/Poppins.ttf"),
+    PoppinsBold: require("@/assets/fonts/Poppins-SemiBold.ttf"),
   });
   useEffect(() => {
     if (loaded) {
