@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   overallMoney: {
-    fontSize: 12,
+    fontSize: 24,
+    fontWeight: "bold",
     textAlign: "center"
   },
   individualAccountsContainer: {
