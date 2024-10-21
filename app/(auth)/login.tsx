@@ -10,7 +10,6 @@ import {
   View,
   Alert,
 } from "react-native";
-import * as SQLite from "expo-sqlite";
 import { Link, router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
