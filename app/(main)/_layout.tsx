@@ -11,7 +11,7 @@ const MainTabs = () => {
           title: "Dashboard",
 					tabBarActiveTintColor: colors.mainColor,
           tabBarIcon: ({ focused }) => 
-						<TabBarIcon size={28} name={"home"} color={ focused ? colors.mainColor : colors.greyWhite}/>
+						<TabBarIcon size={28} name={"podium"} color={ focused ? colors.mainColor : colors.greyWhite}/>
         }}
       />
       <Tabs.Screen
