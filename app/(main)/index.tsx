@@ -27,7 +27,7 @@ const Dashboard = () => {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <Text style={[styles.fontPoppins, {color: colors.mainColor, fontSize: 16}]}>Paynance</Text>
+        <Text style={ styles.appName }>Paynance</Text>
         <Text style={ [styles.fontPoppins, styles.overallMoney] }>P5352.86</Text>
         <View style={ styles.individualAccountsContainer }>
           <View style={ styles.individualAccount }> 
@@ -60,10 +60,16 @@ export default Dashboard;
 
 const styles = StyleSheet.create({
   fontPoppins: {
-    fontFamily: "Poppins"
+    fontFamily: "Poppins",
+  },
+  appName: {
+    fontFamily: "PoppinsBold",
+    fontSize: 16,
+    color: colors.mainColor,
   },
   container: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    paddingHorizontal: 10
   },
   addButton: {
     position: "absolute",
