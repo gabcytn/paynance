@@ -30,16 +30,16 @@ const Dashboard = () => {
         <Text style={ [styles.fontPoppins, styles.overallMoney] }>P5352.86</Text>
         <View style={ styles.individualAccountsContainer }>
           <View style={ styles.individualAccount }> 
-            <Text>P2,550</Text>
-            <Text>Cash</Text>
+            <Text style={[styles.fontPoppins]}>P2,550</Text>
+            <Text style={[styles.fontPoppins]}>Cash</Text>
           </View>
           <View style={ styles.individualAccount }> 
-            <Text>P2,550</Text>
-            <Text>GCash</Text>
+            <Text style={[styles.fontPoppins]}>P2,550</Text>
+            <Text style={[styles.fontPoppins]}>GCash</Text>
           </View>
           <View style={ styles.individualAccount }> 
-            <Text>P2,550</Text>
-            <Text>Debit</Text>
+            <Text style={[styles.fontPoppins]}>P2,550</Text>
+            <Text style={[styles.fontPoppins]}>Debit</Text>
           </View>
         </View>
       </SafeAreaView>
@@ -81,6 +81,8 @@ const styles = StyleSheet.create({
   },
   individualAccountsContainer: {
     flexDirection: "row",
+    justifyContent: "center",
+    gap: 10,
   },
   individualAccount: {
 
