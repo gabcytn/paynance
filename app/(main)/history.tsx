@@ -1,5 +1,13 @@
-import { StyleSheet, Text, SafeAreaView, Platform, StatusBar } from 'react-native'
-import React from 'react'
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  Platform,
+  StatusBar,
+} from "react-native";
+import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 import MainButton from "@/components/MainButton";
 import colors from "@/colors";
 const logout = async () => {
@@ -17,10 +25,10 @@ const History = () => {
         styles={styles}
       />
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default History
+export default History;
 
 const styles = StyleSheet.create({
   container: {
@@ -39,4 +47,4 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     color: colors.offWhite,
   },
-})
+});
