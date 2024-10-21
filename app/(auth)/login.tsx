@@ -38,7 +38,7 @@ const Login = () => {
       });
       if (res.status === 200) {
         await AsyncStorage.setItem("isLoggedIn", "true");
-        await AsyncStorage.setItem("userEmail", emaiil);
+        await AsyncStorage.setItem("userEmail", email);
         router.replace("../(main)");
       } else {
         setPassword("");
