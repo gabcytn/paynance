@@ -79,6 +79,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: "center"
   },
+  individualAccountsContainer: {
+    flexDirection: "row",
+  },
+  individualAccount: {
+
+  },
   button: {
     marginTop: 5,
     paddingHorizontal: 10,
