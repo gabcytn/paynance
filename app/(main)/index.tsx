@@ -30,16 +30,16 @@ const Dashboard = () => {
         <Text style={ [styles.fontPoppins, styles.overallMoney] }>P5352.86</Text>
         <View style={ styles.individualAccountsContainer }
           <View style={ styles.individualAccount }> 
+            <Text>P2,550</Text>
             <Text>Cash</Text>
-            <Text>P2,550</Text>
           </View>
           <View style={ styles.individualAccount }> 
+            <Text>P2,550</Text>
             <Text>GCash</Text>
-            <Text>P2,550</Text>
           </View>
           <View style={ styles.individualAccount }> 
-            <Text>Debit</Text>
             <Text>P2,550</Text>
+            <Text>Debit</Text>
           </View>
         </View>
       </SafeAreaView>
