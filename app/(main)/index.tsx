@@ -14,7 +14,6 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
 
-
 const Dashboard = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -28,7 +27,8 @@ const Dashboard = () => {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <Text>Dashboard</Text>
+        <Text style={ styles.overallMoney }>P5352.86</Text>
+
       </SafeAreaView>
       <Pressable
         style={({ pressed }) => [
@@ -45,6 +45,9 @@ const Dashboard = () => {
 export default Dashboard;
 
 const styles = StyleSheet.create({
+  fontPoppins: {
+    fontFamily: "Poppins"
+  },
   container: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
@@ -58,6 +61,10 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: "center",
     alignItems: "center",
+  },
+  overallMoney: {
+    fontSize: 12,
+    textAlign: "center"
   },
   button: {
     marginTop: 5,
