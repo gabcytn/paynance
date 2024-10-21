@@ -28,7 +28,7 @@ const Dashboard = () => {
     <>
       <SafeAreaView style={styles.container}>
         <Text style={ [styles.fontPoppins, styles.overallMoney] }>P5352.86</Text>
-        <View style={ styles.individualAccountsContainer }
+        <View style={ styles.individualAccountsContainer }>
           <View style={ styles.individualAccount }> 
             <Text>P2,550</Text>
             <Text>Cash</Text>
