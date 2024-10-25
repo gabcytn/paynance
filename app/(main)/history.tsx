@@ -17,7 +17,7 @@ const logout = async () => {
 };
 const History = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text>History</Text>
       <MainButton
         text="Logout"
@@ -25,7 +25,7 @@ const History = () => {
         onPress={logout}
         styles={styles}
       />
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
