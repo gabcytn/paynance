@@ -14,7 +14,7 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
 
-const Dashboard = () => {
+const Dashboard= () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
