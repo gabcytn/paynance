@@ -34,6 +34,9 @@ export default History;
 const styles = StyleSheet.create({
   container: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
     marginTop: 5,
