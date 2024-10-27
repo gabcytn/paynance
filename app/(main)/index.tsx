@@ -27,6 +27,8 @@ const Dashboard= () => {
       if (!isLoggedIn) {
         router.replace("../(auth)/login");
         return;
+      } else {
+        const db = await SQLite.openDatabaseAsync("user_expenses");
       }
     };
     checkLoginStatus();
