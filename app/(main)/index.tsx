@@ -8,22 +8,29 @@ import {
   Button,
   Pressable,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
 
 const Dashboard= () => {
+  const [cash, setCash] = useState(0);
+  const [gCash, setGCash] = useState(0);
+  const [debit, setDebit] = useState(0);
+  const [sumMoney, setSumMoney] = useState(cash + gCash + debit);
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
       if (!isLoggedIn) {
         router.replace("../(auth)/login");
+        return;
       }
     };
     checkLoginStatus();
   }, []);
+
   return (
     <>
       <SafeAreaView style={styles.container}>
