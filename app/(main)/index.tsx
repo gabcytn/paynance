@@ -35,18 +35,18 @@ const Dashboard= () => {
     <>
       <SafeAreaView style={styles.container}>
         <Text style={ styles.appName }>Paynance</Text>
-        <Text style={ [styles.fontPoppins, styles.overallMoney] }>P5352.86</Text>
+        <Text style={ [styles.fontPoppins, styles.overallMoney] }>P{sumMoney}</Text>
         <View style={ styles.individualAccountsContainer }>
           <View style={ styles.individualAccount }> 
-            <Text style={[styles.fontPoppins]}>P2,550</Text>
+            <Text style={[styles.fontPoppins]}>P{cash}</Text>
             <Text style={[styles.fontPoppins]}>Cash</Text>
           </View>
           <View style={ styles.individualAccount }> 
-            <Text style={[styles.fontPoppins]}>P2,550</Text>
+            <Text style={[styles.fontPoppins]}>P{gCash}</Text>
             <Text style={[styles.fontPoppins]}>GCash</Text>
           </View>
           <View style={ styles.individualAccount }> 
-            <Text style={[styles.fontPoppins]}>P2,550</Text>
+            <Text style={[styles.fontPoppins]}>P{debit}</Text>
             <Text style={[styles.fontPoppins]}>Debit</Text>
           </View>
         </View>
