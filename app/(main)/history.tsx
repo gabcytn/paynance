@@ -17,7 +17,7 @@ const logout = async () => {
 };
 const History = () => {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text>History</Text>
       <MainButton
         text="Logout"
