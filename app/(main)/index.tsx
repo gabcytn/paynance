@@ -9,6 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import * as SQLite from "expo-sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
