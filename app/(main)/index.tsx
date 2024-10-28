@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
 
 const Dashboard = () => {
+  const [userID, setUserID] = useState<number>();
   const [cash, setCash] = useState(0);
   const [gCash, setGCash] = useState(0);
   const [debit, setDebit] = useState(0);
@@ -28,6 +29,8 @@ const Dashboard = () => {
         router.replace("../(auth)/login");
         return;
       } else {
+        const id = await AsyncStorage.getItem("id");
+        setUserID(Number(id));
         (await SQLite.openDatabaseAsync("expensesdb"))
           .execAsync(`PRAGMA journal_mode = WAL; 
           CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMIARY KEY NOT NULL, cash INTEGER, gcash DOUBLE, debit DOUBLE)`);
