@@ -15,7 +15,7 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
 
-const Dashboard= () => {
+const Dashboard = () => {
   const [cash, setCash] = useState(0);
   const [gCash, setGCash] = useState(0);
   const [debit, setDebit] = useState(0);
@@ -28,7 +28,9 @@ const Dashboard= () => {
         router.replace("../(auth)/login");
         return;
       } else {
-        const db = await SQLite.openDatabaseAsync("user_expenses");
+        (await SQLite.openDatabaseAsync("expensesdb"))
+          .execAsync(`PRAGMA journal_mode = WAL; 
+          CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMIARY KEY NOT NULL, cash INTEGER, gcash DOUBLE, debit DOUBLE)`);
       }
     };
     checkLoginStatus();
@@ -37,18 +39,20 @@ const Dashboard= () => {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <Text style={ styles.appName }>Paynance</Text>
-        <Text style={ [styles.fontPoppins, styles.overallMoney] }>P{sumMoney}</Text>
-        <View style={ styles.individualAccountsContainer }>
-          <View style={ styles.individualAccount }> 
+        <Text style={styles.appName}>Paynance</Text>
+        <Text style={[styles.fontPoppins, styles.overallMoney]}>
+          P{sumMoney}
+        </Text>
+        <View style={styles.individualAccountsContainer}>
+          <View style={styles.individualAccount}>
             <Text style={[styles.fontPoppins]}>P{cash}</Text>
             <Text style={[styles.fontPoppins]}>Cash</Text>
           </View>
-          <View style={ styles.individualAccount }> 
+          <View style={styles.individualAccount}>
             <Text style={[styles.fontPoppins]}>P{gCash}</Text>
             <Text style={[styles.fontPoppins]}>GCash</Text>
           </View>
-          <View style={ styles.individualAccount }> 
+          <View style={styles.individualAccount}>
             <Text style={[styles.fontPoppins]}>P{debit}</Text>
             <Text style={[styles.fontPoppins]}>Debit</Text>
           </View>
@@ -79,7 +83,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   addButton: {
     position: "absolute",
@@ -95,16 +99,14 @@ const styles = StyleSheet.create({
   overallMoney: {
     fontSize: 24,
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   individualAccountsContainer: {
     flexDirection: "row",
     justifyContent: "center",
     gap: 10,
   },
-  individualAccount: {
-
-  },
+  individualAccount: {},
   button: {
     marginTop: 5,
     paddingHorizontal: 10,
