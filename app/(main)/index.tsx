@@ -15,8 +15,16 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
 
+type sqlReturn = {
+  id: number;
+  cash: number;
+  gcash: number;
+  debit: number;
+};
+
 const Dashboard = () => {
   const [userID, setUserID] = useState<number>();
+  const [DB, setDB] = useState<SQLite.SQLiteDatabase>();
   const [cash, setCash] = useState(0);
   const [gCash, setGCash] = useState(0);
   const [debit, setDebit] = useState(0);
@@ -31,9 +39,24 @@ const Dashboard = () => {
       } else {
         const id = await AsyncStorage.getItem("id");
         setUserID(Number(id));
-        (await SQLite.openDatabaseAsync("expensesdb"))
-          .execAsync(`PRAGMA journal_mode = WAL; 
+        const db = await SQLite.openDatabaseAsync("expensesdb");
+        setDB(db);
+        DB?.execAsync(`PRAGMA journal_mode = WAL; 
           CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMIARY KEY NOT NULL, cash INTEGER, gcash DOUBLE, debit DOUBLE)`);
+        DB?.runAsync("INSERT INTO expenses VALUES (?, ?, ?, ?)", [
+          userID!,
+          cash,
+          gCash,
+          debit,
+        ]);
+        const firstRow: sqlReturn | null | undefined = await DB?.getFirstAsync(
+          "SELECT * FROM expenses"
+        );
+
+        setCash(firstRow!.cash);
+        setGCash(firstRow!.gcash);
+        setDebit(firstRow!.debit);
+        setSumMoney(cash + gCash + debit);
       }
     };
     checkLoginStatus();
