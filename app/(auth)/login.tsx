@@ -13,6 +13,7 @@ import {
 import { Link, router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
+import * as SQLite from "expo-sqlite";
 import MainButton from "@/components/MainButton";
 import InputBox from "@/components/InputBox";
 import colors from "@/colors";
@@ -36,14 +37,16 @@ const Login = () => {
           password: password,
         }),
       });
-      if (res.status === 200) {
-        await AsyncStorage.setItem("isLoggedIn", "true");
-        await AsyncStorage.setItem("userEmail", email);
-        router.replace("../(main)");
-      } else {
+      if (res.status !== 200) {
         setPassword("");
         Alert.alert("Try again", "Invalid credentials");
+        return;
       }
+
+      const data = await res.json();
+      await AsyncStorage.setItem("id", data.id.toString());
+      await AsyncStorage.setItem("isLoggedIn", "true");
+      router.replace("../(main)");
     }
   }
   useEffect(() => {
