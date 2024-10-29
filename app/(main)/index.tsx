@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Button,
   Pressable,
+  Modal,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import * as SQLite from "expo-sqlite";
@@ -29,6 +30,7 @@ const Dashboard = () => {
   const [gCash, setGCash] = useState(0);
   const [debit, setDebit] = useState(0);
   const [sumMoney, setSumMoney] = useState(cash + gCash + debit);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -86,9 +88,18 @@ const Dashboard = () => {
           styles.addButton,
           { opacity: pressed ? 0.8 : 1 },
         ]}
+        onPress={() => setIsModalVisible(true)}
       >
         <Ionicons name="add" size={30} color={colors.offWhite} />
       </Pressable>
+      <Modal
+        visible={isModalVisible}
+        onRequestClose={() => setIsModalVisible(false)}
+        presentationStyle="pageSheet"
+        animationType="slide"
+      >
+        <Text>Hello modal</Text>
+      </Modal>
     </>
   );
 };
