@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import * as SQLite from "expo-sqlite";
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 
@@ -8,6 +9,15 @@ const RootLayout = () => {
     Poppins: require("@/assets/fonts/Poppins.ttf"),
     PoppinsBold: require("@/assets/fonts/Poppins-SemiBold.ttf"),
   });
+  useEffect(() => {
+    const createDatabase = async () => {
+      const db = await SQLite.openDatabaseAsync("expensesdb");
+      db.execAsync(`PRAGMA journal_mode = WAL; 
+          CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMIARY KEY NOT NULL, cash INTEGER, gcash DOUBLE, debit DOUBLE)`);
+    };
+
+    createDatabase();
+  }, []);
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
