@@ -5,7 +5,6 @@ import {
   StatusBar,
   Platform,
   SafeAreaView,
-  Button,
   Pressable,
   Modal,
 } from "react-native";
