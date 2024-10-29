@@ -43,22 +43,21 @@ const Dashboard = () => {
         setUserID(Number(id));
         const db = await SQLite.openDatabaseAsync("expensesdb");
         setDB(db);
-        db.execAsync(`PRAGMA journal_mode = WAL; 
-          CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMIARY KEY NOT NULL, cash INTEGER, gcash DOUBLE, debit DOUBLE)`);
+        try {
+          const firstRow: sqlReturn | null | undefined = await db.getFirstAsync(
+            `SELECT * FROM expenses WHERE id = ?`,
+            [id]
+          );
+          setCash(firstRow!.cash);
+          setGCash(firstRow!.gcash);
+          setDebit(firstRow!.debit);
+          setSumMoney(cash + gCash + debit);
+        } catch (e) {
+          console.error(e);
+        }
       }
     };
-    const setExpenseValues = async () => {
-      const firstRow: sqlReturn | null | undefined = await DB?.getFirstAsync(
-        `SELECT * FROM expenses WHERE id = ?`,
-        [userID!]
-      );
-      setCash(firstRow!.cash);
-      setGCash(firstRow!.gcash);
-      setDebit(firstRow!.debit);
-      setSumMoney(cash + gCash + debit);
-    };
     checkLoginStatus();
-    setExpenseValues();
   }, []);
 
   return (
