@@ -47,6 +47,9 @@ const Dashboard = () => {
             `SELECT * FROM expenses WHERE id = ?`,
             [id]
           );
+
+          if (firstRow === undefined || firstRow === null) return;
+
           setCash(firstRow!.cash);
           setGCash(firstRow!.gcash);
           setDebit(firstRow!.debit);
@@ -72,13 +75,15 @@ const Dashboard = () => {
           "INSERT INTO expenses VALUES (${id}, ${cash}, ${gcash}, ${debit})"
         );
 
-        preparedStatement.executeAsync({
+        await preparedStatement.executeAsync({
           $id: userID,
           $cash: 0,
           $gcash: 0,
           $debit: 0,
         });
       }
+
+      insertDefaultValues();
     };
   }, [DB]);
   return (
