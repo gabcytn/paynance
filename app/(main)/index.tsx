@@ -59,6 +59,28 @@ const Dashboard = () => {
     checkLoginStatus();
   }, []);
 
+  useEffect(() => {
+    if (!DB || !userID) return;
+    const insertDefaultValues = async () => {
+      const firstRow = await DB.getFirstAsync(
+        "SELECT * FROM expenses WHERE id = ",
+        [userID]
+      );
+
+      if (firstRow === undefined || firstRow === null) {
+        const preparedStatement = await DB.prepareAsync(
+          "INSERT INTO expenses VALUES (${id}, ${cash}, ${gcash}, ${debit})"
+        );
+
+        preparedStatement.executeAsync({
+          $id: userID,
+          $cash: 0,
+          $gcash: 0,
+          $debit: 0,
+        });
+      }
+    };
+  }, [DB]);
   return (
     <>
       <SafeAreaView style={styles.container}>
