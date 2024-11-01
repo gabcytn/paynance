@@ -83,7 +83,7 @@ const Dashboard = () => {
         });
       }
 
-      insertDefaultValues();
+      await insertDefaultValues();
     };
   }, [DB]);
   return (
