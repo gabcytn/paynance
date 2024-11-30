@@ -15,13 +15,6 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
 
-type sqlReturn = {
-  id: number;
-  cash: number;
-  gcash: number;
-  debit: number;
-};
-
 const Dashboard = () => {
   const [userID, setUserID] = useState<number>();
   const [DB, setDB] = useState<SQLite.SQLiteDatabase>();
@@ -31,60 +24,31 @@ const Dashboard = () => {
   const [sumMoney, setSumMoney] = useState(cash + gCash + debit);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
+  // load the SQLite database on open
   useEffect(() => {
     const checkLoginStatus = async () => {
       const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
       if (!isLoggedIn) {
         router.replace("../(auth)/login");
         return;
-      } else {
-        const id = await AsyncStorage.getItem("id");
-        setUserID(Number(id));
-        const db = await SQLite.openDatabaseAsync("expensesdb");
-        setDB(db);
-        try {
-          const firstRow: sqlReturn | null | undefined = await db.getFirstAsync(
-            `SELECT * FROM expenses WHERE id = ?`,
-            [id]
-          );
-
-          if (firstRow === undefined || firstRow === null) return;
-
-          setCash(firstRow!.cash);
-          setGCash(firstRow!.gcash);
-          setDebit(firstRow!.debit);
-          setSumMoney(cash + gCash + debit);
-        } catch (e) {
-          console.error(e);
-        }
       }
+      const id = await AsyncStorage.getItem("id");
+      setUserID(Number(id));
+      const db = await SQLite.openDatabaseAsync("expensesdb");
+      setDB(db);
     };
     checkLoginStatus();
   }, []);
 
+  // load the values in the DB to the screen
   useEffect(() => {
     if (!DB || !userID) return;
     const insertDefaultValues = async () => {
-      const firstRow = await DB.getFirstAsync(
-        "SELECT * FROM expenses WHERE id = ",
-        [userID]
-      );
-
-      if (firstRow === undefined || firstRow === null) {
-        const preparedStatement = await DB.prepareAsync(
-          "INSERT INTO expenses VALUES (${id}, ${cash}, ${gcash}, ${debit})"
-        );
-
-        await preparedStatement.executeAsync({
-          $id: userID,
-          $cash: 0,
-          $gcash: 0,
-          $debit: 0,
-        });
-      }
-
-      await insertDefaultValues();
+      // TODO (load the values from SQLite
+      console.log('TODO: load values from SQLite')
     };
+
+    insertDefaultValues();
   }, [DB]);
   return (
     <>
