@@ -13,7 +13,11 @@ const RootLayout = () => {
     const createDatabase = async () => {
       const db = await SQLite.openDatabaseAsync("expensesdb");
       db.execAsync(`PRAGMA journal_mode = WAL; 
-          CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMIARY KEY NOT NULL, cash INTEGER, gcash DOUBLE, debit DOUBLE)`);
+          CREATE TABLE IF NOT EXISTS expenses (
+            id INTEGER PRIMIARY KEY NOT NULL, 
+            cash INTEGER DEFAULT 0, 
+            gcash DOUBLE DEFAULT 0, 
+            debit DOUBLE DEFAULT 0)`);
     };
 
     createDatabase();
