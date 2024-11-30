@@ -18,10 +18,10 @@ import colors from "@/colors";
 const Dashboard = () => {
   const [userID, setUserID] = useState<number>();
   const [DB, setDB] = useState<SQLite.SQLiteDatabase>();
-  const [cash, setCash] = useState(0);
-  const [gCash, setGCash] = useState(0);
-  const [debit, setDebit] = useState(0);
-  const [sumMoney, setSumMoney] = useState(cash + gCash + debit);
+  const [cash, setCash] = useState();
+  const [gCash, setGCash] = useState();
+  const [debit, setDebit] = useState();
+  const [sumMoney, setSumMoney] = useState();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   // load the SQLite database on open
@@ -36,20 +36,35 @@ const Dashboard = () => {
       setUserID(Number(id));
       const db = await SQLite.openDatabaseAsync("expensesdb");
       setDB(db);
+      await createRowForThisUser(db, Number(id));
+      await displayValuesFromDatabase(db);
     };
     checkLoginStatus();
   }, []);
 
   // load the values in the DB to the screen
-  useEffect(() => {
-    if (!DB || !userID) return;
-    const insertDefaultValues = async () => {
-      // TODO (load the values from SQLite
-      console.log('TODO: load values from SQLite')
-    };
+  async function createRowForThisUser(db: SQLite.SQLiteDatabase, userId: number) {
+    const statement = await db.prepareAsync(
+      'INSERT INTO expenses (id) VALUES ($idValue)'
+    );
+    try {
+      await statement.executeAsync({ $idValue: userId });
+    } catch (err) {
+      console.error(err)
+    } finally {
+      await statement.finalizeAsync();
+    }
+  }
 
-    insertDefaultValues();
-  }, [DB]);
+  async function displayValuesFromDatabase(db: SQLite.SQLiteDatabase) {
+    // const firstRow = await db.getFirstAsync("SELECT * FROM expenses WHERE id = ?", [userID]);
+    // console.log(firstRow);
+    const rows = await db.getAllAsync("SELECT * FROM expenses");
+    for (const row of rows) {
+      console.log(row)
+    }
+    console.log('end of rows');
+  }
   return (
     <>
       <SafeAreaView style={styles.container}>
