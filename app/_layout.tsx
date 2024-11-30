@@ -11,13 +11,19 @@ const RootLayout = () => {
   });
   useEffect(() => {
     const createDatabase = async () => {
-      const db = await SQLite.openDatabaseAsync("expensesdb");
-      db.execAsync(`PRAGMA journal_mode = WAL; 
+      try {
+        const db = await SQLite.openDatabaseAsync("expensesdb");
+        db.execAsync(`PRAGMA journal_mode = WAL; 
           CREATE TABLE IF NOT EXISTS expenses (
-            id INTEGER PRIMIARY KEY NOT NULL, 
+            id INTEGER PRIMARY KEY NOT NULL, 
             cash INTEGER DEFAULT 0, 
             gcash DOUBLE DEFAULT 0, 
             debit DOUBLE DEFAULT 0)`);
+        await db.closeAsync();
+      } catch (err) {
+        console.error('error in _layout.tsx')
+        console.error(err)
+      }
     };
 
     createDatabase();
