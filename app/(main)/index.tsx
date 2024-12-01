@@ -36,11 +36,24 @@ const Dashboard = () => {
       setUserID(Number(id));
       const db = await SQLite.openDatabaseAsync("expensesdb");
       setDB(db);
+      const isUserExisting = await doesUserAlreadyExists(Number(id), db);
+      if (isUserExisting) {
+        await displayValuesFromDatabase(db);
+        return;
+      }
       await createRowForThisUser(db, Number(id));
       await displayValuesFromDatabase(db);
     };
     checkLoginStatus();
   }, []);
+
+  async function doesUserAlreadyExists(id: number, db: SQLite.SQLiteDatabase): Promise<boolean> {
+    interface Row {
+      count: number;
+    }
+    const row: Row | null = await db.getFirstAsync<Row>("SELECT COUNT(*) AS count FROM expenses WHERE id = ?", [id]);
+    return row?.count ? row.count > 0 : false;
+  }
 
   // load the values in the DB to the screen
   async function createRowForThisUser(db: SQLite.SQLiteDatabase, userId: number) {
