@@ -15,6 +15,31 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
 
+async function doesUserAlreadyExists(id: number, db: SQLite.SQLiteDatabase): Promise<boolean> {
+  type Row = {
+    count: number;
+  }
+  const row: Row | null = await db.getFirstAsync<Row>("SELECT COUNT(*) AS count FROM expenses WHERE id = ?", [id]);
+  if (row)
+    return row.count > 0;
+
+  return false
+}
+
+// load the values in the DB to the screen
+async function createRowForThisUser(db: SQLite.SQLiteDatabase, userId: number) {
+  const statement = await db.prepareAsync(
+    'INSERT INTO expenses (id) VALUES ($idValue)'
+  );
+  try {
+    await statement.executeAsync({ $idValue: userId });
+  } catch (err) {
+    console.error(err)
+  } finally {
+    await statement.finalizeAsync();
+  }
+}
+
 const Dashboard = () => {
   const [userID, setUserID] = useState<number>();
   const [DB, setDB] = useState<SQLite.SQLiteDatabase>();
@@ -46,31 +71,6 @@ const Dashboard = () => {
     };
     checkLoginStatus();
   }, []);
-
-  async function doesUserAlreadyExists(id: number, db: SQLite.SQLiteDatabase): Promise<boolean> {
-    type Row = {
-      count: number;
-    }
-    const row: Row | null = await db.getFirstAsync<Row>("SELECT COUNT(*) AS count FROM expenses WHERE id = ?", [id]);
-    if (row)
-      return row.count > 0;
-
-    return false
-  }
-
-  // load the values in the DB to the screen
-  async function createRowForThisUser(db: SQLite.SQLiteDatabase, userId: number) {
-    const statement = await db.prepareAsync(
-      'INSERT INTO expenses (id) VALUES ($idValue)'
-    );
-    try {
-      await statement.executeAsync({ $idValue: userId });
-    } catch (err) {
-      console.error(err)
-    } finally {
-      await statement.finalizeAsync();
-    }
-  }
 
   async function displayValuesFromDatabase(id: number, db: SQLite.SQLiteDatabase) {
     type Row = {
