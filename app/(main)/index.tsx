@@ -18,10 +18,10 @@ import colors from "@/colors";
 const Dashboard = () => {
   const [userID, setUserID] = useState<number>();
   const [DB, setDB] = useState<SQLite.SQLiteDatabase>();
-  const [cash, setCash] = useState();
-  const [gCash, setGCash] = useState();
-  const [debit, setDebit] = useState();
-  const [sumMoney, setSumMoney] = useState();
+  const [cash, setCash] = useState<number>();
+  const [gCash, setGCash] = useState<number>();
+  const [debit, setDebit] = useState<number>();
+  const [sumMoney, setSumMoney] = useState<number>();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   // load the SQLite database on open
@@ -38,21 +38,24 @@ const Dashboard = () => {
       setDB(db);
       const isUserExisting = await doesUserAlreadyExists(Number(id), db);
       if (isUserExisting) {
-        await displayValuesFromDatabase(db);
+        await displayValuesFromDatabase(Number(id), db);
         return;
       }
       await createRowForThisUser(db, Number(id));
-      await displayValuesFromDatabase(db);
+      await displayValuesFromDatabase(Number(id), db);
     };
     checkLoginStatus();
   }, []);
 
   async function doesUserAlreadyExists(id: number, db: SQLite.SQLiteDatabase): Promise<boolean> {
-    interface Row {
+    type Row = {
       count: number;
     }
     const row: Row | null = await db.getFirstAsync<Row>("SELECT COUNT(*) AS count FROM expenses WHERE id = ?", [id]);
-    return row?.count ? row.count > 0 : false;
+    if (row)
+      return row.count > 0;
+
+    return false
   }
 
   // load the values in the DB to the screen
@@ -69,14 +72,20 @@ const Dashboard = () => {
     }
   }
 
-  async function displayValuesFromDatabase(db: SQLite.SQLiteDatabase) {
-    // const firstRow = await db.getFirstAsync("SELECT * FROM expenses WHERE id = ?", [userID]);
-    // console.log(firstRow);
-    const rows = await db.getAllAsync("SELECT * FROM expenses");
-    for (const row of rows) {
-      console.log(row)
+  async function displayValuesFromDatabase(id: number, db: SQLite.SQLiteDatabase) {
+    type Row = {
+      cash: number;
+      gcash: number;
+      debit: number;
     }
-    console.log('end of rows');
+    const firstRow: Row | null = await db.getFirstAsync("SELECT * FROM expenses WHERE id = ?", [id]);
+    if (firstRow) {
+      setCash(firstRow.cash);
+      setGCash(firstRow.gcash);
+      setDebit(firstRow.debit);
+      setSumMoney(firstRow.cash + firstRow.gcash + firstRow.debit);
+    }
+
   }
   return (
     <>
