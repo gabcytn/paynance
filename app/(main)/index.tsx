@@ -14,6 +14,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet"
 
 async function doesUserAlreadyExists(id: number, db: SQLite.SQLiteDatabase): Promise<boolean> {
   type Row = {
@@ -47,7 +49,6 @@ const Dashboard = () => {
   const [gCash, setGCash] = useState<number>();
   const [debit, setDebit] = useState<number>();
   const [sumMoney, setSumMoney] = useState<number>();
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   // load the SQLite database on open
   useEffect(() => {
@@ -114,18 +115,9 @@ const Dashboard = () => {
           styles.addButton,
           { opacity: pressed ? 0.8 : 1 },
         ]}
-        onPress={() => setIsModalVisible(true)}
       >
         <Ionicons name="add" size={30} color={colors.offWhite} />
       </Pressable>
-      <Modal
-        visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
-        presentationStyle="pageSheet"
-        animationType="slide"
-      >
-        <Text>Hello modal</Text>
-      </Modal>
     </>
   );
 };
