@@ -4,6 +4,34 @@ import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 
 SplashScreen.preventAutoHideAsync();
+async function createTables(db: SQLite.SQLiteDatabase) {
+  await db.execAsync(`
+    PRAGMA journal_mode = WAL;
+
+    CREATE TABLE IF NOT EXISTS assets (
+      id INTEGER PRIMARY KEY NOT NULL, 
+      cash INTEGER DEFAULT 0, 
+      gcash REAL DEFAULT 0, 
+      debit REAL DEFAULT 0
+    );
+
+    CREATE TABLE IF NOT EXISTS income (
+      id INTEGER NOT NULL,
+      amount REAL,
+      category VARCHAR(50),
+      date TEXT DEFAULT CURRENT_DATE,
+      FOREIGN KEY (id) REFERENCES assets(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS expense (
+      id INTEGER NOT NULL,
+      amount REAL,
+      category VARCHAR(50),
+      date TEXT DEFAULT CURRENT_DATE,
+      FOREIGN KEY (id) REFERENCES assets(id)
+    );
+  `);
+}
 const RootLayout = () => {
   const [loaded] = useFonts({
     Poppins: require("@/assets/fonts/Poppins.ttf"),
@@ -13,12 +41,7 @@ const RootLayout = () => {
     const createDatabase = async () => {
       try {
         const db = await SQLite.openDatabaseAsync("expensesdb");
-        db.execAsync(`PRAGMA journal_mode = WAL; 
-          CREATE TABLE IF NOT EXISTS expenses (
-            id INTEGER PRIMARY KEY NOT NULL, 
-            cash INTEGER DEFAULT 0, 
-            gcash DOUBLE DEFAULT 0, 
-            debit DOUBLE DEFAULT 0)`);
+        createTables(db)
         await db.closeAsync();
       } catch (err) {
         console.error('error in _layout.tsx')
