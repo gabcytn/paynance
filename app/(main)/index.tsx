@@ -105,22 +105,24 @@ const Dashboard = () => {
     console.log('handleSheetChanges', index);
   }, []);
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <Text style={styles.appName}>Paynance</Text>
-      <BottomSheetModalProvider>
-        <BottomSheetModal
-          ref={bottomSheetModalRef}
-          onChange={handleSheetChanges}
-          snapPoints={[100, 50, 75]}
-        >
-          <BottomSheetView style={{ zIndex: 2 }}>
-            <Text>Test</Text>
-            <Text>Test</Text>
-            <Text>Test</Text>
-          </BottomSheetView>
-        </BottomSheetModal>
-      </BottomSheetModalProvider>
+    <>
+      <GestureHandlerRootView style={styles.container}>
+        <Text style={styles.appName}>Paynance</Text>
+        <BottomSheetModalProvider>
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            onChange={handleSheetChanges}
+          >
+            <BottomSheetView style={{ zIndex: 2 }}>
+              <Text>Test</Text>
+              <Text>Test</Text>
+              <Text>Test</Text>
+            </BottomSheetView>
+          </BottomSheetModal>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
 
+      {/* add button in the bottom right of the home page */}
       <Pressable
         style={({ pressed }) => [
           styles.addButton,
@@ -130,7 +132,7 @@ const Dashboard = () => {
       >
         <Ionicons name="add" size={30} color={colors.offWhite} />
       </Pressable>
-    </GestureHandlerRootView>
+    </>
   );
 };
 
