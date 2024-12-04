@@ -105,7 +105,7 @@ const Dashboard = () => {
   }, []);
   return (
     <GestureHandlerRootView style={styles.container}>
-      <Text style={styles.appName}>Paynance</Text>
+      <Text style={styles.appName}>{constants.names.appName}</Text>
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={bottomSheetModalRef}
