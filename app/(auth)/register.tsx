@@ -15,7 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
 import MainButton from "@/components/MainButton";
 import InputBox from "@/components/InputBox";
-import colors from "@/colors";
+import constants from "@/constants";
 const SERVER_URL = process.env.EXPO_PUBLIC_SERVER_URL;
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -90,7 +90,7 @@ const Register = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
         <Text style={styles.mainText}>
-          Register to <Text style={{ color: colors.mainColor }}>Paynance</Text>
+          Register to <Text style={{ color: constants.colors.mainColor }}>{constants.names.appName}</Text>
         </Text>
         <Text style={styles.subTitle}>Start tracking your money</Text>
         <InputBox
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.offWhite,
+    backgroundColor: constants.colors.offWhite,
   },
   mainText: {
     fontFamily: "Poppins",
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
   signIn: {
     fontFamily: "Poppins",
-    color: colors.mainColor,
+    color: constants.colors.mainColor,
     fontSize: 12,
   },
   button: {
@@ -179,13 +179,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     width: 100,
-    backgroundColor: colors.mainColor,
+    backgroundColor: constants.colors.mainColor,
     borderRadius: 7,
   },
   text: {
     textAlign: "center",
     fontFamily: "Poppins",
     textTransform: "uppercase",
-    color: colors.offWhite,
+    color: constants.colors.offWhite,
   },
 });

@@ -10,7 +10,7 @@ import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import MainButton from "@/components/MainButton";
-import colors from "@/colors";
+import constants from "@/constants";
 const logout = async () => {
   await AsyncStorage.clear();
   router.replace("../(auth)/login");
@@ -43,12 +43,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     width: 100,
-    backgroundColor: colors.mainColor,
+    backgroundColor: constants.colors.mainColor,
     borderRadius: 7,
   },
   text: {
     textAlign: "center",
     fontFamily: "Poppins",
-    color: colors.offWhite,
+    color: constants.colors.offWhite,
   },
 });

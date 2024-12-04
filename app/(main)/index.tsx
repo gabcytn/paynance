@@ -14,13 +14,12 @@ import * as SQLite from "expo-sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import colors from "@/colors";
+import constants from "@/constants";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   BottomSheetModal,
   BottomSheetView,
   BottomSheetModalProvider,
-  TouchableOpacity,
 } from "@gorhom/bottom-sheet";
 
 async function doesUserAlreadyExists(id: number, db: SQLite.SQLiteDatabase): Promise<boolean> {
@@ -127,7 +126,7 @@ const Dashboard = () => {
         ]}
         onPress={handlePresentModalPress}
       >
-        <Ionicons name="add" size={30} color={colors.offWhite} />
+        <Ionicons name="add" size={30} color={constants.colors.offWhite} />
       </Pressable>
     </GestureHandlerRootView>
   );
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
   appName: {
     fontFamily: "PoppinsBold",
     fontSize: 16,
-    color: colors.mainColor,
+    color: constants.colors.mainColor,
   },
   container: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
     bottom: 30,
     right: 30,
-    backgroundColor: colors.mainColor,
+    backgroundColor: constants.colors.mainColor,
     width: 50,
     height: 50,
     borderRadius: 100,
@@ -166,12 +165,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     width: 100,
-    backgroundColor: colors.mainColor,
+    backgroundColor: constants.colors.mainColor,
     borderRadius: 7,
   },
   text: {
     textAlign: "center",
     fontFamily: "Poppins",
-    color: colors.offWhite,
+    color: constants.colors.offWhite,
   },
 });

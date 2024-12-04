@@ -16,7 +16,7 @@ import React, { useEffect, useState } from "react";
 import * as SQLite from "expo-sqlite";
 import MainButton from "@/components/MainButton";
 import InputBox from "@/components/InputBox";
-import colors from "@/colors";
+import constants from "@/constants";
 
 const SERVER_URL = process.env.EXPO_PUBLIC_SERVER_URL;
 const Login = () => {
@@ -63,7 +63,7 @@ const Login = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
         <Text style={styles.mainText}>
-          Welcome to <Text style={{ color: colors.mainColor }}>Paynance</Text>
+          Welcome to <Text style={{ color: constants.colors.mainColor }}>{constants.names.appName}</Text>
         </Text>
         <Text style={styles.subTitle}>Start tracking your money</Text>
         <InputBox
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.offWhite,
+    backgroundColor: constants.colors.offWhite,
   },
   mainText: {
     fontFamily: "Poppins",
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   forgotPassword: {
     width: 250,
     textAlign: "right",
-    color: colors.mainColor,
+    color: constants.colors.mainColor,
     fontFamily: "Poppins",
     fontSize: 12,
     marginEnd: 5,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   },
   createAccount: {
     fontFamily: "Poppins",
-    color: colors.mainColor,
+    color: constants.colors.mainColor,
     fontSize: 12,
   },
   button: {
@@ -151,13 +151,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     width: 100,
-    backgroundColor: colors.mainColor,
+    backgroundColor: constants.colors.mainColor,
     borderRadius: 7,
   },
   text: {
     textAlign: "center",
     fontFamily: "Poppins",
     textTransform: "uppercase",
-    color: colors.offWhite,
+    color: constants.colors.offWhite,
   },
 });
