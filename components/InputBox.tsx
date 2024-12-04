@@ -1,13 +1,12 @@
 import {
   StyleProp,
-  StyleSheet,
   Text,
   TextInput,
   View,
   ViewStyle,
 } from "react-native";
-import React, { Dispatch, SetStateAction, useState } from "react";
-import colors from "@/colors";
+import React, { Dispatch, SetStateAction } from "react";
+import constants from "@/constants";
 type PropTypes = {
   placeholder: string;
   isSecure: boolean;
@@ -37,8 +36,8 @@ const InputBox = ({
             borderColor: isError
               ? "red"
               : value
-              ? colors.mainColor
-              : colors.softBlack,
+                ? constants.colors.mainColor
+                : constants.colors.softBlack,
             borderWidth: 1.25,
           },
         ]}
@@ -71,5 +70,3 @@ const InputBox = ({
 };
 
 export default InputBox;
-
-const styles2 = StyleSheet.create({});
