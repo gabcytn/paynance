@@ -1,4 +1,5 @@
 import {
+  Button,
   StyleSheet,
   Text,
   View,
@@ -8,12 +9,19 @@ import {
   Pressable,
   Modal,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import * as SQLite from "expo-sqlite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/colors";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  BottomSheetModal,
+  BottomSheetView,
+  BottomSheetModalProvider,
+  TouchableOpacity,
+} from "@gorhom/bottom-sheet";
 
 async function doesUserAlreadyExists(id: number, db: SQLite.SQLiteDatabase): Promise<boolean> {
   type Row = {
@@ -47,7 +55,6 @@ const Dashboard = () => {
   const [gCash, setGCash] = useState<number>();
   const [debit, setDebit] = useState<number>();
   const [sumMoney, setSumMoney] = useState<number>();
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   // load the SQLite database on open
   useEffect(() => {
@@ -87,46 +94,42 @@ const Dashboard = () => {
     }
 
   }
+  // ref
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
   return (
-    <>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.appName}>Paynance</Text>
-        <Text style={[styles.fontPoppins, styles.overallMoney]}>
-          P{sumMoney}
-        </Text>
-        <View style={styles.individualAccountsContainer}>
-          <View style={styles.individualAccount}>
-            <Text style={[styles.fontPoppins]}>P{cash}</Text>
-            <Text style={[styles.fontPoppins]}>Cash</Text>
-          </View>
-          <View style={styles.individualAccount}>
-            <Text style={[styles.fontPoppins]}>P{gCash}</Text>
-            <Text style={[styles.fontPoppins]}>GCash</Text>
-          </View>
-          <View style={styles.individualAccount}>
-            <Text style={[styles.fontPoppins]}>P{debit}</Text>
-            <Text style={[styles.fontPoppins]}>Debit</Text>
-          </View>
-        </View>
-      </SafeAreaView>
+    <GestureHandlerRootView style={styles.container}>
+      <Text style={styles.appName}>Paynance</Text>
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          onChange={handleSheetChanges}
+        >
+          <BottomSheetView style={{ zIndex: 2 }}>
+            <Text>Test</Text>
+            <Text>Test</Text>
+            <Text>Test</Text>
+          </BottomSheetView>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
+
       <Pressable
         style={({ pressed }) => [
           styles.addButton,
           { opacity: pressed ? 0.8 : 1 },
         ]}
-        onPress={() => setIsModalVisible(true)}
+        onPress={handlePresentModalPress}
       >
         <Ionicons name="add" size={30} color={colors.offWhite} />
       </Pressable>
-      <Modal
-        visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
-        presentationStyle="pageSheet"
-        animationType="slide"
-      >
-        <Text>Hello modal</Text>
-      </Modal>
-    </>
+    </GestureHandlerRootView>
   );
 };
 
@@ -144,9 +147,11 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     paddingHorizontal: 10,
+    flex: 1,
   },
   addButton: {
     position: "absolute",
+    zIndex: -1,
     bottom: 30,
     right: 30,
     backgroundColor: colors.mainColor,
@@ -156,17 +161,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  overallMoney: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  individualAccountsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 10,
-  },
-  individualAccount: {},
   button: {
     marginTop: 5,
     paddingHorizontal: 10,
