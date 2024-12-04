@@ -1,5 +1,4 @@
 import {
-  Button,
   StyleSheet,
   Text,
   View,
@@ -7,7 +6,6 @@ import {
   Platform,
   SafeAreaView,
   Pressable,
-  Modal,
 } from "react-native";
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import * as SQLite from "expo-sqlite";
@@ -26,7 +24,7 @@ async function doesUserAlreadyExists(id: number, db: SQLite.SQLiteDatabase): Pro
   type Row = {
     count: number;
   }
-  const row: Row | null = await db.getFirstAsync<Row>("SELECT COUNT(*) AS count FROM expenses WHERE id = ?", [id]);
+  const row: Row | null = await db.getFirstAsync<Row>("SELECT COUNT(*) AS count FROM assets WHERE id = ?", [id]);
   if (row)
     return row.count > 0;
 
@@ -34,12 +32,12 @@ async function doesUserAlreadyExists(id: number, db: SQLite.SQLiteDatabase): Pro
 }
 
 // load the values in the DB to the screen
-async function createRowForThisUser(db: SQLite.SQLiteDatabase, userId: number) {
+async function createRowForThisUser(id: number, db: SQLite.SQLiteDatabase) {
   const statement = await db.prepareAsync(
-    'INSERT INTO expenses (id) VALUES ($idValue)'
+    'INSERT INTO assets (id) VALUES ($idValue)'
   );
   try {
-    await statement.executeAsync({ $idValue: userId });
+    await statement.executeAsync({ $idValue: id });
   } catch (err) {
     console.error(err)
   } finally {
@@ -72,7 +70,7 @@ const Dashboard = () => {
         await displayValuesFromDatabase(Number(id), db);
         return;
       }
-      await createRowForThisUser(db, Number(id));
+      await createRowForThisUser(Number(id), db);
       await displayValuesFromDatabase(Number(id), db);
     };
     checkLoginStatus();
@@ -84,7 +82,7 @@ const Dashboard = () => {
       gcash: number;
       debit: number;
     }
-    const firstRow: Row | null = await db.getFirstAsync("SELECT * FROM expenses WHERE id = ?", [id]);
+    const firstRow: Row | null = await db.getFirstAsync("SELECT * FROM assets WHERE id = ?", [id]);
     if (firstRow) {
       setCash(firstRow.cash);
       setGCash(firstRow.gcash);
@@ -112,9 +110,10 @@ const Dashboard = () => {
           onChange={handleSheetChanges}
         >
           <BottomSheetView style={{ zIndex: 2 }}>
-            <Text>Test</Text>
-            <Text>Test</Text>
-            <Text>Test</Text>
+            <Text>Cash: {cash}</Text>
+            <Text>GCash: {gCash}</Text>
+            <Text>Debit: {debit}</Text>
+            <Text>Sum: {sumMoney}</Text>
           </BottomSheetView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
